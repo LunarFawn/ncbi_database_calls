@@ -5,6 +5,7 @@ File to sandbox getting rfam data for RNA hub
 import json
 import requests
 
+
 from typing import Dict, Any
 
 
@@ -28,8 +29,11 @@ def get_sequence_json():
     hits_dict:Dict[Any,Any] = r.json()["hits"]
     
     for hit in hits_dict.keys():
+        print(f'Hit = {hit}')
         new_thing = hits_dict[hit]
-        print (new_thing[0]['alignment']) 
+        for key, value in new_thing[0]['alignment'].items():
+            print(f'{key} = {value}')
+            # print (new_thing[0]['alignment']) 
 
 
 get_sequence_json()
