@@ -1,0 +1,53 @@
+# cmscan :: search sequence(s) against a CM database
+# INFERNAL 1.1.4 (Dec 2020)
+# Copyright (C) 2020 Howard Hughes Medical Institute.
+# Freely distributed under the BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query sequence file:                   /home/pearljen/repo/ncbi_database_calls/src/rfam_calls/scripts/example/example.fa
+# target CM database:                    /home/rnahub/rnahub/db/rfam/Rfam.cm
+# output directed to file:               /home/pearljen/repo/ncbi_database_calls/cmscan.out
+# tabular output of hits:                /home/pearljen/repo/ncbi_database_calls/cmscan.tblout
+# show alignments in output:             no
+# number of worker threads:              16
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       R1116  [L=89]
+Hit scores:
+ rank     E-value  score  bias  modelname     start    end   mdl trunc   gc  description
+ ----   --------- ------ -----  ------------ ------ ------   --- ----- ----  -----------
+  (1) !   7.9e-13   54.4   0.0  Entero_5_CRE     32     89 +  cm    3' 0.60  Enterovirus 5' cloverleaf cis-acting replication element
+ ------ inclusion threshold ------
+  (2) ?       1.8   12.8   0.0  MAT2A_D          64     42 -  cm    no 0.61  MAT2A 3'UTR stem loop D
+
+
+Internal HMM-only pipeline statistics summary: (run for model(s) with zero basepairs)
+--------------------------------------------------------------------------------------
+Query sequence(s):                                               1  (178 residues searched)
+Target model(s):                                               348  (41076 consensus positions)
+Windows   passing  local HMM SSV           filter:              10  (0.0138); expected (0.02)
+Windows   passing  local HMM MSV      bias filter:              10  (0.0138); expected (0.02)
+Windows   passing  local HMM Viterbi       filter:               0  (0); expected (0.001)
+Windows   passing  local HMM Forward       filter:               0  (0); expected (1e-05)
+Total HMM hits reported:                                         0  (0)
+
+Internal CM pipeline statistics summary:
+----------------------------------------
+Query sequence(s):                                               1  (178 residues searched)
+Query sequences re-searched for truncated hits:                  1  (490.4 residues re-searched, avg per model)
+Target model(s):                                              3760  (443053 consensus positions)
+Windows   passing  local HMM SSV           filter:            2335  (0.07133); expected (0.35)
+Windows   passing  local HMM Viterbi       filter:                  (off)
+Windows   passing  local HMM Viterbi  bias filter:                  (off)
+Windows   passing  local HMM Forward       filter:             698  (0.02197); expected (0.02)
+Windows   passing  local HMM Forward  bias filter:             659  (0.02074); expected (0.02)
+Windows   passing glocal HMM Forward       filter:             143  (0.004521); expected (0.02)
+Windows   passing glocal HMM Forward  bias filter:             137  (0.004326); expected (0.02)
+Envelopes passing glocal HMM envelope defn filter:             130  (0.003504); expected (0.02)
+Envelopes passing  local CM  CYK           filter:              10  (0.0002141); expected (0.0001)
+Total CM hits reported:                                          2  (5.531e-05); includes 1 truncated hit(s)
+
+Total CM and HMM hits reported:                                  2
+
+# CPU time: 3.14u 0.28s 00:00:03.42 Elapsed: 00:00:01.00
+//
+[ok]

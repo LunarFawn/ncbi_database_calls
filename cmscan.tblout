@@ -1,0 +1,12 @@
+#target name         accession query name           accession mdl mdl from   mdl to seq from   seq to strand trunc pass   gc  bias  score   E-value inc description of target
+#------------------- --------- -------------------- --------- --- -------- -------- -------- -------- ------ ----- ---- ---- ----- ------ --------- --- ---------------------
+Entero_5_CRE         RF00386   R1116                -          cm        1       58       32       89      +    3'    3 0.60   0.0   54.4   7.9e-13 !   Enterovirus 5' cloverleaf cis-acting replication element
+MAT2A_D              RF02263   R1116                -          cm        1       41       64       42      -    no    1 0.61   0.0   12.8       1.8 ?   MAT2A 3'UTR stem loop D
+#
+# Program:         cmscan
+# Version:         1.1.4 (Dec 2020)
+# Pipeline mode:   SCAN
+# Query file:      /home/pearljen/repo/ncbi_database_calls/src/rfam_calls/scripts/example/example.fa
+# Target file:     /home/rnahub/rnahub/db/rfam/Rfam.cm
+# Option settings: /usr/lib/infernal/cmscan -o /home/pearljen/repo/ncbi_database_calls/cmscan.out --tblout /home/pearljen/repo/ncbi_database_calls/cmscan.tblout --noali /home/rnahub/rnahub/db/rfam/Rfam.cm /home/pearljen/repo/ncbi_database_calls/src/rfam_calls/scripts/example/example.fa 
+# [ok]
