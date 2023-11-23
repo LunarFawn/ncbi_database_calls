@@ -13,10 +13,10 @@ import heapq
 from attr import define
 
 
-@define(kw_only=True)
-class SeedAlignmentResult():
-    name:str
-    alignment:str
+# @define(kw_only=True)
+# class SeedAlignmentResult():
+#     name:str
+#     alignment:str
 
 @define(kw_only=True)
 class CmscanResult():
@@ -25,7 +25,7 @@ class CmscanResult():
     comment:str
     is_error:bool = False
     seed_alignments:List[str] = []
-    seed_alignemnt_results:List[SeedAlignmentResult] = []
+    seed_alignemnt_dict:Dict[str, str] = {}
     
 
 def run_cmscan(db_path:str, fasta_path:str)-> List[CmscanResult]:
@@ -134,10 +134,7 @@ def get_alignment_data_from_seed():
 def find_alignment_from_seed(cmscan_hits:Dict[str, CmscanResult], seed_path:str,):
     #make a heapq list que that can be poped as items are found
     hit_name_list:List[str] = list(cmscan_hits.keys())
-    
-    #make the list into a queue
-    heapq.heapify(hit_name_list)
-    
+   
     stockhold_1_0_id:str = '#=GF ID'
     stockhold_1_0_gap:str = '   '
     
@@ -146,6 +143,8 @@ def find_alignment_from_seed(cmscan_hits:Dict[str, CmscanResult], seed_path:str,
     
     current_found_model_name:str = ''
     current_found_alignments:List[str] = []
+    
+    current_found_alignments_dict:Dict[str, str] = {}
     
     with gzip.open(seed_path,'rt', encoding='ISO-8859-1') as file:
         for line in file:
@@ -158,10 +157,47 @@ def find_alignment_from_seed(cmscan_hits:Dict[str, CmscanResult], seed_path:str,
                         found_empty_lines = False
                         current_hit:CmscanResult = cmscan_hits[current_found_model_name]
                         current_hit.seed_alignments = current_found_alignments
+                        
+                        current_hit.seed_alignemnt_dict = current_found_alignments_dict
                         cmscan_hits[current_found_model_name] = current_hit
                         #now reset the alignments
                         current_found_alignments = []
+                        current_found_alignments_dict = {}
+                        hit_name_list.remove(current_hit.model_name)
+                        if len(hit_name_list) > 0:
+                            continue
+                        else:
+                            break
+                    
                     current_found_alignments.append(line)
+                    
+                    end_name_index:int = 0
+                    start_alignment_index:int = -1
+                    
+                    temp_line:str = line
+                    
+                    special_string:str = "#=GC"
+
+                    if special_string in line:
+                        special_index = line.index(special_string) + len(special_string) + 1
+                        temp_line = line[special_index:]
+                    
+                    for index in range(len(temp_line)):                       
+                        
+                        if temp_line[index] != " ":
+                            end_name_index += 1
+                        else:
+                            start_alignment_index = index
+                            break
+                    
+                    alignment_name:str = temp_line[:end_name_index]
+                    if special_string in line:
+                        alignment_name = f'#=GC {alignment_name}'
+                    alignment_string:str = temp_line[start_alignment_index:].strip(' ').strip('\n')
+                    current_found_alignments_dict[alignment_name] = alignment_string
+                    
+                    
+                    
             
             if in_cmscan_hit_now is True:
                 if line == '\n':
@@ -194,6 +230,14 @@ seed_resutls:Dict[str, CmscanResult] = find_alignment_from_seed(seed_path='/home
                          cmscan_hits=results)
 
 print()
-print(seed_resutls['Entero_5_CRE'])
+print('Entero_5_CRE')
+# print(seed_resutls['Entero_5_CRE'].seed_alignemnt_dict)
+print("Alignments")
 print()
-print(seed_resutls['MAT2A_D'])
+for item in seed_resutls['Entero_5_CRE'].seed_alignemnt_dict:
+    print (f'name = {item}, Alignment = {seed_resutls["Entero_5_CRE"].seed_alignemnt_dict[item]}')
+print()
+print('MAT2A_D')
+# print(seed_resutls['MAT2A_D'].seed_alignemnt_dict)
+for item in seed_resutls['MAT2A_D'].seed_alignemnt_dict:
+    print (f'name = {item}, Alignment = {seed_resutls["MAT2A_D"].seed_alignemnt_dict[item]}')
