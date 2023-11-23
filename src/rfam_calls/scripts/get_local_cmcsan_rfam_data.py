@@ -13,5 +13,8 @@ def run_cmscan(db_path:str, fasta_path:str):
     result = os.popen(cmd=command)
     print(result.read())
     
+def find_alignment_from_seed():
+    pass
+    
 run_cmscan(db_path='/home/rnahub/rnahub/db/rfam/Rfam.cm',
            fasta_path='/home/pearljen/repo/ncbi_database_calls/src/rfam_calls/scripts/example/example.fa')
